@@ -1,4 +1,33 @@
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BACKGROUND CELL FIELD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+(function initCellField() {
+  const field = document.createElement('div');
+  field.id = 'cell-field';
+  document.body.prepend(field);
+
+  const cells = [
+    { s: 480, x:  5, y: 10, d: 24, del:   0, c: '0,255,159'  },
+    { s: 300, x: 72, y: 55, d: 18, del:  -6, c: '255,42,109' },
+    { s: 370, x: 42, y: 78, d: 28, del: -12, c: '5,217,232'  },
+    { s: 195, x: 88, y:  8, d: 16, del:  -3, c: '0,255,159'  },
+    { s: 540, x: 26, y: 42, d: 32, del:  -9, c: '255,42,109' },
+    { s: 240, x: 62, y: 22, d: 20, del: -15, c: '5,217,232'  },
+    { s: 155, x: 14, y: 87, d: 14, del:  -2, c: '0,255,159'  },
+  ];
+
+  cells.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'bg-cell';
+    el.style.cssText =
+      `left:${c.x}%;top:${c.y}%;width:${c.s}px;height:${c.s}px;` +
+      `--c:${c.c};--d:${c.d}s;--del:${c.del}s;`;
+    field.appendChild(el);
+  });
+})();
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    CELL PLAYER
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
