@@ -249,3 +249,226 @@ footer {
 
   section h2 { font-size: 1.3rem; }
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CELL PLAYER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.cell-player {
+  position: relative;
+  margin: 1rem 0 1.5rem;
+  border-radius: 16px;
+  border: 1.5px solid rgba(100, 200, 140, 0.25);
+  background: rgba(18, 42, 28, 0.6);
+  overflow: hidden;
+  min-height: 76px;
+  backdrop-filter: blur(4px);
+}
+
+/* floating organelles live in this layer */
+.cell-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── Organelle shapes ── */
+.organelle {
+  position: absolute;
+  border-radius: 50%;
+  animation: org-drift var(--dur, 6s) var(--delay, 0s) ease-in-out infinite alternate;
+  opacity: 0.18;
+}
+
+.organelle.mito {
+  width: 26px; height: 13px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: inset 3px 0 0 rgba(255,255,255,0.15);
+}
+
+.organelle.vesicle {
+  width: 9px; height: 9px;
+  background: #818cf8;
+}
+
+.organelle.golgi {
+  width: 28px; height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid #f59e0b;
+  opacity: 0.12;
+}
+
+.organelle.lysosome {
+  width: 11px; height: 11px;
+  background: #f87171;
+}
+
+@keyframes org-drift {
+  0%   { transform: translate(0px,  0px) rotate(0deg);  }
+  33%  { transform: translate(var(--dx1, 8px),  var(--dy1, -5px)) rotate(12deg); }
+  66%  { transform: translate(var(--dx2, -6px), var(--dy2, 7px))  rotate(-8deg); }
+  100% { transform: translate(var(--dx3, 10px), var(--dy3, 3px))  rotate(20deg); }
+}
+
+/* ── Controls row ── */
+.cell-controls {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+/* ── Nucleus / play button ── */
+.nucleus-btn {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(100,200,140,0.4);
+  background: radial-gradient(circle at 38% 38%, rgba(74,222,128,0.25), rgba(20,50,35,0.8));
+  color: #a7f3d0;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, transform 0.15s;
+  box-shadow: 0 0 0 0 rgba(74,222,128,0);
+}
+
+.nucleus-btn svg { width: 18px; height: 18px; }
+
+.nucleus-btn:hover {
+  border-color: rgba(74,222,128,0.8);
+  transform: scale(1.08);
+}
+
+.cell-player.playing .nucleus-btn {
+  animation: nucleus-pulse 2s ease-in-out infinite;
+}
+
+@keyframes nucleus-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+}
+
+/* ── mRNA track ── */
+.mrna-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mrna-label {
+  font-size: 0.7rem;
+  color: rgba(167,243,208,0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.mrna-track {
+  position: relative;
+  height: 28px;
+  cursor: pointer;
+}
+
+/* backbone line */
+.mrna-track::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 3px;
+  margin-top: -1.5px;
+  background: rgba(100,200,140,0.15);
+  border-radius: 2px;
+}
+
+/* codon marks rendered by JS */
+.mrna-codons {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.codon-tick {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.codon-tick::after {
+  content: '';
+  display: block;
+  width: 1.5px;
+  background: rgba(100,200,140,0.22);
+  border-radius: 1px;
+}
+.codon-tick.triplet::after { background: rgba(100,200,140,0.45); }
+
+/* played fill */
+.mrna-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  margin-top: -1.5px;
+  background: linear-gradient(90deg, #4ade80, #7c9ef5);
+  border-radius: 2px;
+  pointer-events: none;
+  transition: width 0.08s linear;
+}
+
+/* ── Ribosome ── */
+.ribosome {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 28px; height: 22px;
+  transform: translate(-50%, -55%);
+  pointer-events: none;
+  will-change: left;
+}
+
+.rib-large {            /* 60S large subunit — bottom dome */
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 14px;
+  border-radius: 10px 10px 6px 6px;
+  background: radial-gradient(ellipse at 40% 30%, #a78bfa, #6d28d9);
+  box-shadow: 0 2px 6px rgba(109,40,217,0.5);
+}
+
+.rib-small {            /* 40S small subunit — top cap, offset left */
+  position: absolute;
+  top: 0; left: 1px;
+  width: 18px; height: 11px;
+  border-radius: 9px 9px 4px 5px;
+  background: radial-gradient(ellipse at 35% 35%, #c4b5fd, #7c3aed);
+  box-shadow: 0 1px 4px rgba(124,58,237,0.5);
+}
+
+/* tunnel highlight between subunits */
+.rib-tunnel {
+  position: absolute;
+  bottom: 12px; left: 5px;
+  width: 4px; height: 3px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.4);
+}
+
+/* ── Time display ── */
+.cell-time {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: rgba(167,243,208,0.6);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  min-width: 72px;
+  text-align: right;
+}
