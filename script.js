@@ -43,11 +43,12 @@ class CellPlayer {
       "></span>`;
     }).join('');
 
-    // Codon ticks (every 3rd is a "triplet" — taller)
+    // Codon ticks — every 3rd is a taller "triplet" marker
     const codonsHTML = Array.from({ length: CODON_COUNT }, (_, i) => {
-      const h   = i % 3 === 2 ? 10 : 5;
-      const cls = i % 3 === 2 ? 'codon-tick triplet' : 'codon-tick';
-      return `<span class="${cls}" style="--h:${h}px"><style>.codon-tick:nth-child(${i+1})::after{height:${h}px}</style></span>`;
+      const isTriplet = i % 3 === 2;
+      const h = isTriplet ? 10 : 5;
+      const opacity = isTriplet ? 0.45 : 0.22;
+      return `<span class="codon-tick" style="height:${h}px;opacity:${opacity}"></span>`;
     }).join('');
 
     const label = this.el.dataset.label ?? '';

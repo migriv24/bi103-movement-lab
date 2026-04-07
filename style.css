@@ -396,18 +396,12 @@ footer {
 
 .codon-tick {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.codon-tick::after {
-  content: '';
-  display: block;
   width: 1.5px;
-  background: rgba(100,200,140,0.22);
+  max-width: 1.5px;
   border-radius: 1px;
+  background: rgba(100,200,140,1);
+  align-self: center;
 }
-.codon-tick.triplet::after { background: rgba(100,200,140,0.45); }
 
 /* played fill */
 .mrna-fill {
