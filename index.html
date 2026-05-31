@@ -306,5 +306,23 @@
     <p id="lightbox-caption"></p>
   </div>
 
+  <script>
+  window.CLICK_CONFIG = {
+    idleSprite: 'Neutral_LookingTopRight_NoAction',
+    dialogues: [
+      {
+        trigger: 'enter',
+        sprite: 'Neutral_LookingTopRight_Pointing',
+        text: 'Your skeleton is a lever system. Every bone is a lever arm, every joint is a fulcrum, and the muscles are what apply the force. Movement is applied physics.'
+      },
+      {
+        trigger: 'scroll:0.5',
+        sprite: 'Cool_LookingRight_Gesture',
+        text: 'Looking at structure to figure out function is one of biology\'s most reliable moves. What a bone looks like usually tells you something about what it does.'
+      }
+    ]
+  };
+  </script>
+  <script src="https://migriv24.github.io/bi103-final-portfolio/click-overlay.js"></script>
 </body>
 </html>
